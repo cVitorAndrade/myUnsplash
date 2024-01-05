@@ -6,7 +6,7 @@ exports.up = knex => knex.schema.createTable("images", table => {
     table.increments("id");
     table.text("title");
     table.text("path");
-    table.integer("users_id").references("id").inTable("users");
+    table.integer("user_id").references("id").inTable("users");
 })
 
 /**
