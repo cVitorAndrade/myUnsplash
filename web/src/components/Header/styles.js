@@ -5,6 +5,8 @@ export const Container = styled.header`
     margin: auto;
     display: flex;
     justify-content: space-between;
+    padding-top: 3.2rem;
+
 
     div {
         display: flex;
