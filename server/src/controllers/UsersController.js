@@ -1,3 +1,4 @@
+const AppError = require("../utils/AppError");
 const { hash } = require("bcryptjs");
 const knex = require("../database/knex");
 
@@ -7,7 +8,7 @@ class UsersController {
 
         const user = await knex("users").where({ email }).first();
         if ( user ) {
-            throw new Error("Esse email já está em uso.")
+            throw new AppError("Esse email já está em uso.")
         }
 
         const hashedPassword = await hash(password, 8);
