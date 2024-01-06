@@ -12,25 +12,29 @@ export const Container = styled.div`
         grid-template-areas: "first second third";
         column-gap: 1.6rem;
 
-        .one{
+        .first-column{
             grid-area: first;
             div + div {
                 margin-top: 1.6rem;
             }
         }
         
-        .two {
+        .second-column {
             grid-area: second;
             div + div {
                 margin-top: 1.6rem;
             }
         }
         
-        .three {
+        .third-column {
             grid-area: third;
             div + div {
                 margin-top: 1.6rem;
             }
+        }
+
+        .double-size {
+            height: 60rem;
         }
     }
 
