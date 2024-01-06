@@ -8,11 +8,7 @@ export function Home () {
     const [allImages, setAllImages] = useState([]);
     
     useEffect(() => {
-        api.get("/images").then( ({ data }) => {
-            setAllImages([...data.images])
-        }).catch(error => {
-            console.log(error);
-        })
+        getImages();
     }, []);
 
     const [firstColumnImage, setFirstColumnImage] = useState();
@@ -66,6 +62,23 @@ export function Home () {
 
     }, [columnsNumber, allImages])    
 
+    function getImages () {
+        api.get("/images").then( ({ data }) => {
+            setAllImages([...data.images])
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    function handleDeleteImage (id) {
+        try {
+            api.delete(`/images/${id}`)
+            getImages();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return(
         <Container>
             <Header />
@@ -83,6 +96,7 @@ export function Home () {
                                         title={image.title} 
                                         path={image.path}
                                         className={doubleSize ? "double-size" : ""}
+                                        deleteImage={() => handleDeleteImage(image.id)}
                                     />
                                 )
                             })
@@ -100,6 +114,7 @@ export function Home () {
                                         title={image.title} 
                                         path={image.path}
                                         className={doubleSize ? "double-size" : ""}
+                                        deleteImage={() => handleDeleteImage(image.id)}
                                     />
                                 )
                             })
@@ -117,6 +132,7 @@ export function Home () {
                                         title={image.title} 
                                         path={image.path}
                                         className={doubleSize ? "double-size" : ""}
+                                        deleteImage={() => handleDeleteImage(image.id)}
                                     />
                                 )
                             })

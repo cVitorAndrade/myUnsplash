@@ -1,10 +1,10 @@
 import { Container } from "./styles";
 
-export function ImageItem ({ title, path, ...rest}) {
+export function ImageItem ({ title, path, deleteImage, ...rest}) {
     return(
         <Container { ...rest }>
             <img src={path} alt="" />
-            <button>delete</button>
+            <button onClick={deleteImage}>delete</button>
             <h2>{ title }</h2>
         </Container>
     )
