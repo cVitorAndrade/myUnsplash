@@ -89,6 +89,10 @@ export const Container = styled.div`
 
     }
 
+    .none {
+        display: none;
+    }
+
     @media(max-width: 900px) {
         > main {
             grid-template-columns: 1fr 1fr;

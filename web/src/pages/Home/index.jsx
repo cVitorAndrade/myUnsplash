@@ -8,17 +8,20 @@ import { Button } from "../../components/Button";
 
 export function Home () {
     const [allImages, setAllImages] = useState([]);
+
+    const [imageTitle, setImageTitle] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
+
+    const [visibleUploadModal, setVisibleUploadModal] = useState(false);
+
     
     useEffect(() => {
         getImages();
     }, []);
 
-    const [firstColumnImage, setFirstColumnImage] = useState();
-    const [secondColumnImage, setSecondColumnImage] = useState();
-    const [thirdColumnImage, setThirdColumnImage] = useState();
-
+    
     const [columnsNumber, setColumnsNumber] = useState()
-
+    
     useEffect(() => {
         function handleResize() {
             if ( window.innerWidth >= 900 ) {
@@ -36,8 +39,12 @@ export function Home () {
         return () => {
             window.removeEventListener("resize", handleResize)
         }
-
+        
     }, [])
+    
+    const [firstColumnImage, setFirstColumnImage] = useState();
+    const [secondColumnImage, setSecondColumnImage] = useState();
+    const [thirdColumnImage, setThirdColumnImage] = useState();
 
     useEffect(() => {
         if ( columnsNumber === 1 ) {
@@ -81,23 +88,41 @@ export function Home () {
         }
     }
 
+    function handleImageUpload () {
+        try {
+            api.post("/images", { title: imageTitle, path: imageUrl });
+            
+            getImages();
+            clearScreen();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function clearScreen () {
+        setVisibleUploadModal(false);
+        setImageTitle("");
+        setImageUrl("");
+    }
+
     return(
         <Container>
-            <Header />
+            <Header 
+                onClick={() => setVisibleUploadModal(true)}
+            />
 
             <main>
 
                     <div className="first-column">
                         {
                             firstColumnImage && firstColumnImage.map( image => {
-                                const doubleSize = Math.floor(Math.random() * 10) >= 5;
 
                                 return (
                                     <ImageItem 
                                         key={image.id} 
                                         title={image.title} 
                                         path={image.path}
-                                        className={doubleSize ? "double-size" : ""}
+                                        className={image.id % 2 == 0 ? "double-size" : ""}
                                         deleteImage={() => handleDeleteImage(image.id)}
                                     />
                                 )
@@ -108,14 +133,13 @@ export function Home () {
                     <div className="second-column">
                         {
                             secondColumnImage && secondColumnImage.map( image => {
-                                const doubleSize = Math.floor(Math.random() * 10) >= 5;
 
                                 return (
                                     <ImageItem 
                                         key={image.id} 
                                         title={image.title} 
                                         path={image.path}
-                                        className={doubleSize ? "double-size" : ""}
+                                        className={image.id % 2 == 1 ? "double-size" : ""}
                                         deleteImage={() => handleDeleteImage(image.id)}
                                     />
                                 )
@@ -126,14 +150,13 @@ export function Home () {
                     <div className="third-column">
                         {
                             thirdColumnImage && thirdColumnImage.map( image => {
-                                const doubleSize = Math.floor(Math.random() * 10) >= 5;
 
                                 return (
                                     <ImageItem 
                                         key={image.id} 
                                         title={image.title} 
                                         path={image.path}
-                                        className={doubleSize ? "double-size" : ""}
+                                        className={image.id % 2 == 0 ? "double-size" : ""}
                                         deleteImage={() => handleDeleteImage(image.id)}
                                     />
                                 )
@@ -143,16 +166,21 @@ export function Home () {
 
             </main>
 
-            <section className="upload-image-modal">
+            <section className={visibleUploadModal ? "upload-image-modal" : "none"}>
                 <div>
                     <h2>Add a new photo</h2>
 
-                    <Input title="Label" />
-                    <Input title="Photo URL" />
+                    <Input title="Label" onChange={ e => setImageTitle(e.target.value) }/>
+                    <Input title="Photo URL" onChange={ e => setImageUrl(e.target.value) }/>
 
                     <div className="buttons">
-                        <button className="cancel-button">Cancel</button>
-                        <Button title="Submit" />
+                        <button 
+                            className="cancel-button"
+                            onClick={() => setVisibleUploadModal(false)}
+                        >
+                            Cancel
+                        </button>
+                        <Button title="Submit" onClick={handleImageUpload}/>
                     </div>
                 </div>
 
