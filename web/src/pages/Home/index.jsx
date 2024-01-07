@@ -92,8 +92,8 @@ export function Home () {
         try {
             api.post("/images", { title: imageTitle, path: imageUrl });
             
-            getImages();
             clearScreen();
+            getImages();
         } catch (error) {
             console.log(error);
         }
@@ -170,8 +170,17 @@ export function Home () {
                 <div>
                     <h2>Add a new photo</h2>
 
-                    <Input title="Label" onChange={ e => setImageTitle(e.target.value) }/>
-                    <Input title="Photo URL" onChange={ e => setImageUrl(e.target.value) }/>
+                    <Input 
+                        title="Label" 
+                        value={imageTitle} 
+                        onChange={ e => setImageTitle(e.target.value) }
+                    />
+
+                    <Input 
+                        title="Photo URL" 
+                        value={imageUrl} 
+                        onChange={ e => setImageUrl(e.target.value) }
+                    />
 
                     <div className="buttons">
                         <button 
