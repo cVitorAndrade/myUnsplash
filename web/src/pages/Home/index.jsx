@@ -8,6 +8,7 @@ import { Button } from "../../components/Button";
 
 export function Home () {
     const [allImages, setAllImages] = useState([]);
+    const [validImages, setValidImages] = useState([]);
 
     const [imageTitle, setImageTitle] = useState("");
     const [imageUrl, setImageUrl] = useState("");
@@ -48,32 +49,29 @@ export function Home () {
 
     useEffect(() => {
         if ( columnsNumber === 1 ) {
-            setFirstColumnImage(allImages);
+            setFirstColumnImage(validImages);
             return
         } else if ( columnsNumber === 2 ) {
-            const first = allImages.filter((image, index) => index < allImages.length /2)
-            const second = allImages.filter((image, index) => index >= allImages.length / 2 && index < allImages.length)
+            const first = validImages.filter((image, index) => index < validImages.length / columnsNumber)
+            const second = validImages.filter((image, index) => index >= validImages.length / columnsNumber && index < validImages.length)
             setFirstColumnImage(first)
             setSecondColumnImage(second)
         } else {
-            const first = allImages.filter((image, index) => index < allImages.length /3)
-            const second = allImages.filter((image, index) => index >= allImages.length / 3 && index < (allImages.length / 3) * 2 )
-            const third = allImages.filter((image, index) => {
-                if ( index >= (allImages.length /3) * 2 && index <= allImages.length ) {
-                    return true;
-                }
-            }) 
+            const first = validImages.filter((image, index) => index < validImages.length /  columnsNumber)
+            const second = validImages.filter((image, index) => index >= validImages.length /  columnsNumber && index < (validImages.length / columnsNumber) * 2 )
+            const third = validImages.filter((image, index) => index >= (validImages.length / columnsNumber) * 2 && index <= validImages.length ) 
 
             setFirstColumnImage(first)
             setSecondColumnImage(second)
             setThirdColumnImage(third)
         }
 
-    }, [columnsNumber, allImages])    
+    }, [columnsNumber, validImages])    
 
     function getImages () {
         api.get("/images").then( ({ data }) => {
             setAllImages([...data.images])
+            setValidImages([...data.images])
         }).catch(error => {
             console.log(error);
         })
@@ -94,6 +92,7 @@ export function Home () {
             
             clearScreen();
             getImages();
+            
         } catch (error) {
             console.log(error);
         }
@@ -105,10 +104,21 @@ export function Home () {
         setImageUrl("");
     }
 
+    function imageFilter (value) {
+        if ( value.trim() == "" ) {
+            setValidImages(allImages);
+            return;
+        }
+
+        const filteredImages = allImages.filter( image => image.title.toLowerCase().includes(value.toLowerCase()));
+        setValidImages(filteredImages);
+    }
+
     return(
         <Container>
             <Header 
                 onClick={() => setVisibleUploadModal(true)}
+                onChange={ e => imageFilter(e.target.value)}
             />
 
             <main>
