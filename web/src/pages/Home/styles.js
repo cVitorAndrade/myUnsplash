@@ -99,7 +99,7 @@ export const Container = styled.div`
             grid-template-areas: "first second";
         }
 
-        .three {
+        .third-column {
             display: none;
         }
     }
@@ -110,7 +110,7 @@ export const Container = styled.div`
             grid-template-columns: "first";
         }
 
-        .two {
+        .second-column {
             display: none;
         }
     }
