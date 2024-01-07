@@ -5,7 +5,7 @@ export const Container = styled.div`
 
     > main {
         width: min(90%, 130rem);
-        margin: 7.4rem auto 0;
+        margin: 7.4rem auto 10rem;
 
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -36,6 +36,57 @@ export const Container = styled.div`
         .double-size {
             height: 60rem;
         }
+    }
+
+    .upload-image-modal {
+        position: fixed;
+        inset: 0;
+        display: flex;
+
+        background-color: rgba(0, 0, 0, .25);
+        
+        justify-content: center;
+        align-items: center;
+        
+        > div {
+            width: min(90%, 62rem);
+            padding: 2.4rem 3.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+
+            background-color: ${ ({ theme }) => theme.COLORS.WHITE};
+            border-radius: 1.2rem;
+
+            h2 {
+                font-weight: 500;
+                font-size: 2.4rem;
+                line-height: 3.2rem;
+            }
+
+            .buttons {
+                display: flex;
+                align-self: flex-end;
+                gap: 2.4rem;
+
+                
+                .cancel-button {
+                    background: none;
+                    
+                    border: none;
+                    
+                    font-size: 1.6rem;
+                    font-weight: 500;
+                    
+                    color: ${ ({ theme }) => theme.COLORS.GRAY};
+                    
+                    line-height: 2rem;
+
+                    cursor: pointer;
+                }
+            }
+        }
+
     }
 
     @media(max-width: 900px) {

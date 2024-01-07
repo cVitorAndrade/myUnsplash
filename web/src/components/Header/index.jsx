@@ -2,6 +2,7 @@ import { Container } from "./styles";
 
 import { RiFolderUserFill } from "react-icons/ri";
 import { IoSearchOutline } from "react-icons/io5";
+import { Button } from "../Button";
 
 export function Header () {
     return(
@@ -16,7 +17,7 @@ export function Header () {
                     <input type="text" id="input-search" placeholder="Search by name"/>
                 </div>
             </div>
-            <button>Add a photo</button>
+            <Button title="Add a photo" />
         </Container>
     )
 }

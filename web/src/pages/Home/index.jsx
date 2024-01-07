@@ -3,6 +3,8 @@ import { Header } from "../../components/Header";
 import { ImageItem } from "../../components/ImageItem";
 import { Container } from "./styles";
 import { api } from "../../services/api";
+import { Input } from "../../components/Input";
+import { Button } from "../../components/Button";
 
 export function Home () {
     const [allImages, setAllImages] = useState([]);
@@ -140,6 +142,21 @@ export function Home () {
                     </div>
 
             </main>
+
+            <section className="upload-image-modal">
+                <div>
+                    <h2>Add a new photo</h2>
+
+                    <Input title="Label" />
+                    <Input title="Photo URL" />
+
+                    <div className="buttons">
+                        <button className="cancel-button">Cancel</button>
+                        <Button title="Submit" />
+                    </div>
+                </div>
+
+            </section>
 
         </Container>
     )
