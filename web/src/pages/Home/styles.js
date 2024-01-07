@@ -108,6 +108,8 @@ export const Container = styled.div`
         > main {
             grid-template-columns: 1fr;
             grid-template-columns: "first";
+            place-content: center center;
+            column-gap: 0;
         }
 
         .second-column {

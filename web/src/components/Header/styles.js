@@ -65,22 +65,23 @@ export const Container = styled.header`
         }
     }
 
-    button {
-        background-color: ${ ({ theme }) => theme.COLORS.GREEN};
-        border: none;
-        color: ${ ({ theme }) => theme.COLORS.WHITE};
-        border-radius: 1.2rem;
-        padding: 0 2.6rem;
+    @media(max-width: 640px) {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+        
+        > div {
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
 
-        font-size: 1.4rem;
-        font-weight: 700;
-        line-height: 2rem;
+            .search {
+                width: 100%;
 
-        transition: filter .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-
-        &:hover {
-            filter: brightness(0.9);
-            cursor: pointer;
+                input {
+                    width: 100%;
+                }
+            }
         }
     }
 `;
