@@ -30,7 +30,8 @@ class ImagesController {
     }
 
     async delete (request, response) {
-        const { password, id } = request.params;
+        const { id } = request.params;
+        const { password } = request.body;
         const user_id = request.user.id;
 
         const user = await knex("users").where({ id: user_id }).first();
