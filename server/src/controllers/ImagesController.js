@@ -1,3 +1,5 @@
+const AppError = require("../utils/AppError");
+const { compare } = require("bcryptjs");
 const knex = require("../database/knex");
 
 class ImagesController {
@@ -28,7 +30,15 @@ class ImagesController {
     }
 
     async delete (request, response) {
-        const { id } = request.params;
+        const { password, id } = request.params;
+        const user_id = request.user.id;
+
+        const user = await knex("users").where({ id: user_id }).first();
+
+        const passwordMatched = await compare(password, user.password);
+        if ( !passwordMatched ) {
+            throw new AppError("Senha Incorreta", 401);
+        }
 
         await knex("images").where({ id }).delete();
 
