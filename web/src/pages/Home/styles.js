@@ -38,7 +38,8 @@ export const Container = styled.div`
         }
     }
 
-    .upload-image-modal {
+    .upload-image-modal,
+    .delete-image-modal {
         position: fixed;
         inset: 0;
         display: flex;
@@ -87,6 +88,10 @@ export const Container = styled.div`
             }
         }
 
+    }
+
+    .delete-image-modal .buttons button:last-child {
+        background-color: ${ ({ theme }) => theme.COLORS.RED};
     }
 
     .none {

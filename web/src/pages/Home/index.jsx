@@ -13,7 +13,10 @@ export function Home () {
     const [imageTitle, setImageTitle] = useState("");
     const [imageUrl, setImageUrl] = useState("");
 
+    const [password, setPassword] = useState("");
+
     const [visibleUploadModal, setVisibleUploadModal] = useState(false);
+    const [visibleDeleteModal, setVisibleDeleteModal] = useState(false);
 
     
     useEffect(() => {
@@ -77,9 +80,19 @@ export function Home () {
         })
     }
 
-    function handleDeleteImage (id) {
+    const [imageId, setImageId] = useState();
+
+    function openDeleteModal (id) {
+        console.log(id);
+        setVisibleDeleteModal(true);
+        setImageId(id);
+
+    }
+
+    function handleDeleteImage () {
+
         try {
-            api.delete(`/images/${id}`)
+            api.delete(`/images/${imageId}`, { password })
             getImages();
         } catch (error) {
             console.log(error);
@@ -97,11 +110,13 @@ export function Home () {
             console.log(error);
         }
     }
-
     function clearScreen () {
         setVisibleUploadModal(false);
         setImageTitle("");
         setImageUrl("");
+        
+        setVisibleDeleteModal(false);
+        setPassword("");
     }
 
     function imageFilter (value) {
@@ -113,6 +128,7 @@ export function Home () {
         const filteredImages = allImages.filter( image => image.title.toLowerCase().includes(value.toLowerCase()));
         setValidImages(filteredImages);
     }
+
 
     return(
         <Container>
@@ -133,7 +149,7 @@ export function Home () {
                                         title={image.title} 
                                         path={image.path}
                                         className={image.id % 2 == 0 ? "double-size" : ""}
-                                        deleteImage={() => handleDeleteImage(image.id)}
+                                        deleteImage={() => openDeleteModal(image.id)}
                                     />
                                 )
                             })
@@ -150,7 +166,7 @@ export function Home () {
                                         title={image.title} 
                                         path={image.path}
                                         className={image.id % 2 == 1 ? "double-size" : ""}
-                                        deleteImage={() => handleDeleteImage(image.id)}
+                                        deleteImage={() => openDeleteModal(image.id)}
                                     />
                                 )
                             })
@@ -167,7 +183,7 @@ export function Home () {
                                         title={image.title} 
                                         path={image.path}
                                         className={image.id % 2 == 0 ? "double-size" : ""}
-                                        deleteImage={() => handleDeleteImage(image.id)}
+                                        deleteImage={() => openDeleteModal(image.id)}
                                     />
                                 )
                             })
@@ -195,11 +211,35 @@ export function Home () {
                     <div className="buttons">
                         <button 
                             className="cancel-button"
-                            onClick={() => setVisibleUploadModal(false)}
+                            onClick={clearScreen}
                         >
                             Cancel
                         </button>
                         <Button title="Submit" onClick={handleImageUpload}/>
+                    </div>
+                </div>
+
+            </section>
+
+            <section className={visibleDeleteModal ? "delete-image-modal" : "none"}>
+                <div>
+                    <h2>Are you sure?</h2>
+
+                    <Input 
+                        title="Password" 
+                        value={password} 
+                        type="password"
+                        onChange={ e => setPassword(e.target.value) }
+                    />
+
+                    <div className="buttons">
+                        <button 
+                            className="cancel-button"
+                            onClick={clearScreen}
+                        >
+                            Cancel
+                        </button>
+                        <Button title="Delete" onClick={handleDeleteImage}/>
                     </div>
                 </div>
 
