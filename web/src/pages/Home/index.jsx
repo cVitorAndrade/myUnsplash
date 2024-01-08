@@ -80,19 +80,26 @@ export function Home () {
         })
     }
 
+    useEffect(() => {
+        console.log(password);
+    }, [password])
+
     const [imageId, setImageId] = useState();
 
     function openDeleteModal (id) {
-        console.log(id);
         setVisibleDeleteModal(true);
         setImageId(id);
-
     }
 
-    function handleDeleteImage () {
-
+    async function handleDeleteImage () {
         try {
-            api.delete(`/images/${imageId}`, { password })
+            await api.delete(`/images/${imageId}`, {
+                headers: {
+                    "password": password
+                }
+            });
+
+            clearScreen();
             getImages();
         } catch (error) {
             console.log(error);
@@ -110,6 +117,7 @@ export function Home () {
             console.log(error);
         }
     }
+
     function clearScreen () {
         setVisibleUploadModal(false);
         setImageTitle("");
