@@ -15,24 +15,25 @@ export function SignUp () {
 
     const navigate = useNavigate()
 
-    function handleSignUp () {
-        try {
-            if ( !name || !email || !password ) {
-                return alert("Preencha todos os campos.")
-            }
+    function handleSignUp (e) {
+        e.preventDefault();
+        
+        if ( !name || !email || !password ) {
+            return alert("Preencha todos os campos.")
+        }
 
-            api.post("/users", { name, email, password }).then(() => {
-                alert("Usuário cadastrado com sucesso");
-                navigate("/")
-            })
-
-        } catch (error) {
+        api.post("/users", { name, email, password }).then(() => {
+            console.log("sim");
+            alert("Usuário cadastrado com sucesso");
+            navigate("/")
+        })
+        .catch((error) => {
             if ( error.response ) {
                 alert(error.response.data.message)
-            } else {
-                alert("Não foi possível realizar o cadastro.")
+            }else {
+                alert("Não foi possível cadastrar.")
             }
-        }
+        }) 
     }
 
     return(
@@ -63,7 +64,7 @@ export function SignUp () {
 
                     <Button 
                         title="Sign Up"
-                        onClick={handleSignUp}
+                        onClick={e => handleSignUp(e)}
                     />
 
                     <p>

@@ -15,7 +15,8 @@ export function SignIn () {
 
     const { signIn } = useAuth();
 
-    function handleSignIn () {
+    function handleSignIn (e) {
+        e.preventDefault();
         signIn({ email, password })
     }
 
@@ -42,7 +43,7 @@ export function SignIn () {
 
                     <Button 
                         title="Sign In"
-                        onClick={handleSignIn}
+                        onClick={e => handleSignIn(e) }
                     />
 
                     <p>
