@@ -22,7 +22,7 @@ export function AuthProvider ({ children }) {
             if ( error.response ) {
                 alert(error.response.data.message)
             } else {
-                alert("Não foi possivél fazer login.")
+                alert("Não foi possível fazer login.")
             }
         }
     }

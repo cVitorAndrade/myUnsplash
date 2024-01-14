@@ -3,11 +3,19 @@ import { Container } from "./styles";
 
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+
 import { useState } from "react";
+import { useAuth } from "../../hooks/auth";
 
 export function SignIn () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const { signIn } = useAuth();
+
+    function handleSignIn () {
+        signIn({ email, password })
+    }
 
     return(
         <Container>
@@ -30,6 +38,7 @@ export function SignIn () {
 
                     <Button 
                         title="Sign In"
+                        onClick={handleSignIn}
                     />
                 </form>
             </main>
