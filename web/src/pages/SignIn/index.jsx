@@ -7,6 +7,8 @@ import { Button } from "../../components/Button";
 import { useState } from "react";
 import { useAuth } from "../../hooks/auth";
 
+import { Link } from "react-router-dom";
+
 export function SignIn () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -28,11 +30,13 @@ export function SignIn () {
 
                     <Input 
                         title="Email Address"
+                        type="email"
                         onChange={e => setEmail(e.target.value)}
-                    />
+                        />
 
                     <Input 
                         title="Password"
+                        type="password"
                         onChange={e => setPassword(e.target.value)}
                     />
 
@@ -40,6 +44,11 @@ export function SignIn () {
                         title="Sign In"
                         onClick={handleSignIn}
                     />
+
+                    <p>
+                        Don’t have an account?
+                        <Link to="/signup">Sign Up</Link>
+                    </p>
                 </form>
             </main>
 

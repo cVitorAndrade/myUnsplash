@@ -5,7 +5,7 @@ import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { useState } from "react";
 import { api } from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 
 export function SignUp () {
@@ -15,13 +15,13 @@ export function SignUp () {
 
     const navigate = useNavigate()
 
-    async function handleSignUp () {
+    function handleSignUp () {
         try {
             if ( !name || !email || !password ) {
                 return alert("Preencha todos os campos.")
             }
 
-            api.post("/users", { name, email, password}).then(() => {
+            api.post("/users", { name, email, password }).then(() => {
                 alert("Usuário cadastrado com sucesso");
                 navigate("/")
             })
@@ -40,29 +40,36 @@ export function SignUp () {
             <main>
                 <form>
                     <div className="header">
-                        <h1>Welcome back!</h1>
-                        <p>Enter your Credentials to access your account</p>
+                        <h1>Get Started Now</h1>
                     </div>
 
                     <Input 
                         title="Name"
+                        type="text"
                         onChange={e => setName(e.target.value)}
                     />
 
                     <Input 
                         title="Email Address"
+                        type="email"
                         onChange={e => setEmail(e.target.value)}
                     />
 
                     <Input 
                         title="Password"
+                        type="password"
                         onChange={e => setPassword(e.target.value)}
                     />
 
                     <Button 
-                        title="Sign In"
+                        title="Sign Up"
                         onClick={handleSignUp}
                     />
+
+                    <p>
+                        Have an account?
+                        <Link to="/">Sign In</Link>
+                    </p>
                 </form>
             </main>
 

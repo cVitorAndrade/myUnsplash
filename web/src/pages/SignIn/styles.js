@@ -35,6 +35,18 @@ export const Container = styled.div`
             display: flex;
             flex-direction: column;
             gap: 2.4rem;
+
+            > p {
+                font-size: 1.4rem;
+                text-align: center;
+                font-weight: 500;
+
+                a {
+                    color: ${ ({ theme }) => theme.COLORS.GREEN};
+                    text-decoration: none;
+                    margin-left: .5rem;
+                }
+            }
         }
 
     }
