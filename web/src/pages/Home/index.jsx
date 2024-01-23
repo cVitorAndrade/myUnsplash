@@ -73,16 +73,13 @@ export function Home () {
 
     function getImages () {
         api.get("/images").then( ({ data }) => {
-            setAllImages([...data.images])
-            setValidImages([...data.images])
+            const sortedImages = [...data.images].sort( (a,b) => b.id - a.id );
+            setAllImages(sortedImages)
+            setValidImages(sortedImages)
         }).catch(error => {
             console.log(error);
         })
     }
-
-    useEffect(() => {
-        console.log(password);
-    }, [password])
 
     const [imageId, setImageId] = useState();
 
