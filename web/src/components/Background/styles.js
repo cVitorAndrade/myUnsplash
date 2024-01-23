@@ -8,4 +8,8 @@ export const Container = styled.div`
 
     background-position: center center;
     background-size: cover;
+
+    @media( max-width: 800px ) {
+        display: none;
+    }  
 `;
